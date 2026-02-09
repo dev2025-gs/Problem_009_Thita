@@ -3,6 +3,7 @@
 ## 🧩 Problem Overview
 
 You are given a **1-indexed** array of integers called `numbers` that is already sorted in **non-decreasing order**.
+(https://thita.ai/problems/two-sum-ii-input-array-is-sorted)
 
 Your task is to find **two distinct elements** in the array such that their sum equals a given `target`.
 
