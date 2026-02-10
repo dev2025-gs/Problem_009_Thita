@@ -1,21 +1,26 @@
+#Version 2 of Problem Solution
 def twoSum(nums, target):
-    tar = target
-    sorted_arr = nums
-    low = 0
-    high = len(sorted_arr) - 1
+    left, right = 0, len(nums) - 1
     ans_arr = []
-    
-    
-    while low <= high:
-        middle = low + (high-low) // 2
-        
-        if sorted_arr[middle] + sorted_arr[middle+1] == tar:
-            ans_arr = [middle+1, middle+2]
+
+    # Iterate while left pointer is less than right
+    while left < right:
+        sum = nums[left] + nums[right]
+
+        # Check if the sum matches the target
+        if sum == target:
+            ans_arr = [left+1, right+1]
             return ans_arr
-        elif sorted_arr[middle] + sorted_arr[middle+1] > tar:
-            high = middle - 1
+        elif sum < target:
+            
+            # Move left pointer to the right
+            left += 1
         else:
-            low = middle + 1
+            
+            # Move right pointer to the left
+            right -= 1
+
+    # If no pair is found
     return -1
 
 example_arr = [1, 2, 3, 4, 5, 6]
