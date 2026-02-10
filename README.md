@@ -79,3 +79,7 @@ This repository contains:
 - A clean and optimal solution
 - Logic that leverages the sorted array constraint
 - An approach that satisfies all problem requirements
+
+## Note
+Solution was based on the Two-Pointer technique from the following source:
+https://www.geeksforgeeks.org/dsa/check-if-pair-with-given-sum-exists-in-array/
