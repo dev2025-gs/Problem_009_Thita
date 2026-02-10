@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Two Sum Animation</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .bar {
+            display: inline-block;
+            width: 40px;
+            margin: 0 5px;
+            text-align: center;
+            vertical-align: bottom;
+        }
+        .bar span {
+            display: block;
+        }
+        .highlight {
+            background: #ff6666;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Two Sum Step-by-Step Animation</h2>
+    <div id="array"></div>
+    <div id="info"></div>
+    <div class="controls">
+        <button onclick="prevStep()">Prev</button>
+        <button onclick="nextStep()">Next</button>
+    </div>
+    <script>
+        // Example array and target
+        const nums = [1, 2, 3, 4, 5, 6];
+        const target = 11;
+        let steps = [];
+        // Generate steps
+        function generateSteps(nums, target) {
+            let left = 0, right = nums.length - 1;
+            let ans_arr = [];
+            let steps = [];
+            while (left < right) {
+                let sum = nums[left] + nums[right];
+                steps.push({left, right, sum});
+                if (sum === target) {
+                    ans_arr = [nums[left], nums[right]];
+                    steps.push({left, right, sum, action: 'found'});
+                    break;
+                } else if (sum < target) {
+                    steps.push({left, right, sum, action: 'move_left'});
+                    left++;
+                } else {
+                    steps.push({left, right, sum, action: 'move_right'});
+                    right--;
+                }
+            }
+            if (!ans_arr.length) steps.push({action: 'no_pair'});
+            return steps;
+        }
+        steps = generateSteps(nums, target);
+        let idx = 0;
+        function renderStep() {
+            const arrDiv = document.getElementById('array');
+            const infoDiv = document.getElementById('info');
+            arrDiv.innerHTML = '';
+            infoDiv.innerHTML = '';
+            if (idx >= steps.length) {
+                infoDiv.innerHTML = '<b>End of steps</b>';
+                return;
+            }
+            const step = steps[idx];
+            if (step.action === 'no_pair') {
+                infoDiv.innerHTML = '<b>No pair found</b>';
+                return;
+            }
+            for (let i = 0; i < nums.length; i++) {
+                let bar = document.createElement('div');
+                bar.className = 'bar';
+                if (i === step.left || i === step.right) bar.classList.add('highlight');
+                bar.style.height = (nums[i]*20+20) + 'px';
+                bar.innerHTML = `<span>${nums[i]}</span>`;
+                arrDiv.appendChild(bar);
+            }
+            let action = step.action || '';
+            infoDiv.innerHTML = `left=${step.left}, right=${step.right}, sum=${step.sum}, target=${target}<br>Action: ${action}`;
+        }
+        function nextStep() {
+            if (idx < steps.length-1) idx++;
+            renderStep();
+        }
+        function prevStep() {
+            if (idx > 0) idx--;
+            renderStep();
+        }
+        renderStep();
+    </script>
+</body>
+</html>
